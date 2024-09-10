@@ -178,3 +178,15 @@ class Department:
         return [
             Employee.instance_from_db(row) for row in rows
         ]
+    
+    @property
+    def department_id(self):
+        return self._department_id
+
+    @department_id.setter
+    def department_id(self, value):
+        # Ensure that the department_id is an integer and that it exists in the departments table.
+        if isinstance(value, int) and Department.find_by_id(value):
+            self._department_id = value
+        else:
+            raise ValueError("Department ID must reference an existing department.")
